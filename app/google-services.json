@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "383586873859",
+    "project_id": "cerdasberwawasan-2b7f5",
+    "storage_bucket": "cerdasberwawasan-2b7f5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383586873859:android:6b5e0961091913a2f19436",
+        "android_client_info": {
+          "package_name": "com.ardra15.ardrayusrilapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjtdAuFl_SItrd_Tz2hK1xC2NYKSMJFPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
