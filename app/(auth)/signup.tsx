@@ -13,7 +13,7 @@ export default function SignupScreen() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
 
   const handleSignUp = async () => {
@@ -21,10 +21,13 @@ export default function SignupScreen() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const userId = userCredential.user.uid;
 
-      // Save initial game progress to Realtime Database
-      await set(ref(database, `users/${userId}/progress`), {
-        score: 0, // Initialize score
-        gamesPlayed: 0, // Initialize games played
+      // Save user name and initial progress in the database
+      await set(ref(database, `users/${userId}`), {
+        name: name, // Save the user's name
+        progress: {
+          score: 0,
+          gamesPlayed: 0,
+        },
       });
 
       Alert.alert('Sign Up Successful', 'You have signed up successfully!', [
@@ -32,20 +35,16 @@ export default function SignupScreen() {
       ]);
     } catch (error) {
       console.error(error);
-      const errorMessage = (error as Error).message; 
+      const errorMessage = (error as Error).message;
       Alert.alert('Sign Up Failed', errorMessage);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Image
-        source= {LogoKecil}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+      <Image source={LogoKecil} style={styles.logo} resizeMode="contain" />
       <Text style={styles.title}>Create An Account</Text>
-      
+
       <CustomInput
         label="Name"
         value={name}
@@ -74,7 +73,7 @@ export default function SignupScreen() {
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry
-        placeholder="DesignWITHdesigners12345"
+        placeholder="Confirm Your Password"
       />
       
       <CustomButton

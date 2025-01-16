@@ -2,11 +2,31 @@
 import { View, Text, Image, ScrollView, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { auth, database } from '../firebaseConfig'; // Import auth and database
+import { ref, get } from 'firebase/database';
 import YoutubePlayer from 'react-native-youtube-iframe';
 import BG_Carousel from '../../assets/images/bg_carousel.png'
 
 export default function Home() {
   const router = useRouter();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const userId = auth.currentUser?.uid;
+      if (userId) {
+        const userRef = ref(database, `users/${userId}`);
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          const userData = snapshot.val();
+          setUserName(userData.name); // Set the user's name
+        }
+      }
+    };
+
+    fetchUserName();
+  }, []);
 
   const handleLogout = () => {
     Alert.alert(
@@ -30,11 +50,11 @@ export default function Home() {
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <View>
-          <Text style={styles.greeting}>Halo, Udin</Text>
+          <Text style={styles.greeting}>Halo, {userName || 'User'}</Text>
         </View>
         <TouchableOpacity onPress={handleLogout}>
           <View style={styles.profileCircle}>
-            <Text style={styles.profileInitial}>U</Text>
+            <Text style={styles.profileInitial}>{userName ? userName.charAt(0) : 'U'}</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -68,7 +88,7 @@ export default function Home() {
 
           <TouchableOpacity style={styles.gameCard}>
             <Image
-              source= {BG_Carousel}
+              source={BG_Carousel}
               style={styles.gameCardBackground}
               resizeMode="cover"
             />

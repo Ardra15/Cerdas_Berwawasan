@@ -6,7 +6,6 @@ import SplashScreenComponent from './splashScreen';
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    // Add any custom fonts here if needed
   });
 
   useEffect(() => {

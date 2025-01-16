@@ -1,4 +1,3 @@
-// Previous KBBIScreen component
 import { View, Text, TouchableOpacity, StyleSheet, Image, Linking } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Buku from '../../assets/images/buku_kbbi.png'

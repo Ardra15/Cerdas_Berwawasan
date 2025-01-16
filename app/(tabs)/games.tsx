@@ -3,55 +3,57 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useState, useEffect } from 'react';
 import { auth, database } from '../firebaseConfig';
 import { ref, set, get } from 'firebase/database';
+import { useRouter } from 'expo-router';
 
 const questions = [
-  { word: 'Kedaluarsa', isCorrect: false, correctAnswer: 'Kadaluarsa' },
-  { word: 'Junior', isCorrect: false, correctAnswer: 'Junior' },
-  { word: 'Obyek', isCorrect: false, correctAnswer: 'Objek' },
-  { word: 'Sekedar', isCorrect: false, correctAnswer: 'Sekadar' },
-  { word: 'Seksama', isCorrect: false, correctAnswer: 'Saksama' },
-  { word: 'Indra', isCorrect: false, correctAnswer: 'Indra' },
-  { word: 'Cidera', isCorrect: false, correctAnswer: 'Cedera' },
-  { word: 'Ijasah', isCorrect: false, correctAnswer: 'Ijazah' },
-  { word: 'Manajemen', isCorrect: false, correctAnswer: 'Manajemen' },
-  { word: 'Coklat', isCorrect: false, correctAnswer: 'Cokelat' },
-  { word: 'Apotik', isCorrect: false, correctAnswer: 'Apotek' },
-  { word: 'Antre', isCorrect: false, correctAnswer: 'Anter' },
-  { word: 'Desain', isCorrect: false, correctAnswer: 'Desain' },
-  { word: 'Lembab', isCorrect: false, correctAnswer: 'Lembab' },
-  { word: 'Respons', isCorrect: false, correctAnswer: 'Respons' },
-  { word: 'Bis', isCorrect: false, correctAnswer: 'Bus' },
-  { word: 'Teknologi', isCorrect: false, correctAnswer: 'Lembab' },
-  { word: 'Detil', isCorrect: false, correctAnswer: 'Detail' },
-  { word: 'Capek', isCorrect: false, correctAnswer: 'Capek' },
-  { word: 'Diagnosis', isCorrect: false, correctAnswer: 'Diagnosis' },
+  { word: 'Kedaluarsa', isCorrect: false, correctAnswer: 'Kadaluarsa', answerType: 'Tidak Baku' },
+  { word: 'Junior', isCorrect: true, correctAnswer: 'Junior', answerType: 'Baku' },
+  { word: 'Obyek', isCorrect: false, correctAnswer: 'Objek', answerType: 'Tidak Baku' },
+  { word: 'Sekedar', isCorrect: false, correctAnswer: 'Sekadar', answerType: 'Tidak Baku' },
+  { word: 'Seksama', isCorrect: false, correctAnswer: 'Saksama', answerType: 'Tidak Baku' },
+  { word: 'Indra', isCorrect: true, correctAnswer: 'Indra', answerType: 'Baku' },
+  { word: 'Cidera', isCorrect: false, correctAnswer: 'Cedera', answerType: 'Tidak Baku' },
+  { word: 'Ijasah', isCorrect: false, correctAnswer: 'Ijazah', answerType: 'Tidak Baku' },
+  { word: 'Manajemen', isCorrect: true, correctAnswer: 'Manajemen', answerType: 'Baku' },
+  { word: 'Coklat', isCorrect: false, correctAnswer: 'Cokelat', answerType: 'Tidak Baku' },
+  { word: 'Apotik', isCorrect: false, correctAnswer: 'Apotek', answerType: 'Tidak Baku' },
+  { word: 'Antre', isCorrect: false, correctAnswer: 'Anter', answerType: 'Tidak Baku' },
+  { word: 'Desain', isCorrect: true, correctAnswer: 'Desain', answerType: 'Baku' },
+  { word: 'Lembab', isCorrect: false, correctAnswer: 'Lembab', answerType: 'Tidak Baku' },
+  { word: 'Respons', isCorrect: true, correctAnswer: 'Respons', answerType: 'Baku' },
+  { word: 'Bis', isCorrect: false, correctAnswer: 'Bus', answerType: 'Tidak Baku' },
+  { word: 'Teknologi', isCorrect: true, correctAnswer: 'Teknologi', answerType: 'Baku' },
+  { word: 'Detil', isCorrect: false, correctAnswer: 'Detail', answerType: 'Tidak Baku' },
+  { word: 'Capek', isCorrect: false, correctAnswer: 'Capek', answerType: 'Tidak Baku' },
+  { word: 'Diagnosis', isCorrect: true, correctAnswer: 'Diagnosis', answerType: 'Baku' },
 ];
 
 export default function Games() {
+  const router = useRouter();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
 
   useEffect(() => {
-    const loadProgress = async () => {
-      const userId = auth.currentUser?.uid;
-      if (userId) {
-        const progressRef = ref(database, `users/${userId}/progress`);
-        const snapshot = await get(progressRef);
-        if (snapshot.exists()) {
-          const progress = snapshot.val();
-          setScore(progress.score);
-          setAnsweredQuestions(progress.answeredQuestions || []);
-        }
-      }
-    };
-
     loadProgress();
   }, []);
 
+  const loadProgress = async () => {
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      const progressRef = ref(database, `users/${userId}/progress`);
+      const snapshot = await get(progressRef);
+      if (snapshot.exists()) {
+        const progress = snapshot.val();
+        setScore(progress.score);
+        setAnsweredQuestions(progress.answeredQuestions || []);
+      }
+    }
+  };
+
   const handleAnswer = async (isBaku: boolean) => {
     const question = questions[currentQuestion];
-    const isCorrect = isBaku !== question.isCorrect;
+    const isCorrect = isBaku === question.isCorrect;
 
     if (!answeredQuestions.includes(currentQuestion)) {
       if (isCorrect) {
@@ -65,7 +67,7 @@ export default function Games() {
       const userId = auth.currentUser?.uid;
       if (userId) {
         await set(ref(database, `users/${userId}/progress`), {
-          score: score + 5,
+          score: score + (isCorrect ? 5 : 0),
           answeredQuestions: [...answeredQuestions, currentQuestion],
         });
       }
@@ -83,13 +85,26 @@ export default function Games() {
   const resetProgress = async () => {
     const userId = auth.currentUser?.uid;
     if (userId) {
-      await set(ref(database, `users/${userId}/progress`), {
-        score: 0,
-        answeredQuestions: [],
-      });
-      setScore(0);
-      setAnsweredQuestions([]);
-      Alert.alert('Progress Reset', 'Your progress has been reset successfully.');
+      try {
+        // Reset the user's progress in the database
+        await set(ref(database, `users/${userId}/progress`), {
+          score: 0,
+          answeredQuestions: [],
+        });
+
+        // Wait for the database operation to complete before updating state
+        setScore(0);
+        setAnsweredQuestions([]);
+        setCurrentQuestion(0); // Reset to the first question
+
+        // Show alert after resetting
+        Alert.alert('Progress Reset', 'Your progress has been reset successfully.', [
+          { text: 'OK', onPress: () => loadProgress() }, // Refresh data after reset
+        ]);
+      } catch (error) {
+        console.error('Error resetting progress:', error);
+        Alert.alert('Error', 'There was an error resetting your progress. Please try again.');
+      }
     }
   };
 
@@ -263,7 +278,7 @@ const styles = StyleSheet.create({
     width: '48%',
   },
   buttonTidakBaku: {
-    backgroundColor: '#FF0000',
+    backgroundColor: '#FFf',
     borderRadius: 25,
     paddingVertical: 12,
     paddingHorizontal: 24,
@@ -276,7 +291,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonTidakBakuText: {
-    color: '#fff',
+    color: '#000',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

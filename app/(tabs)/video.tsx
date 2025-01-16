@@ -7,12 +7,11 @@ import YoutubePlayer from 'react-native-youtube-iframe';
 export default function Video() {
   const [searchQuery, setSearchQuery] = useState('');
   
-  // Updated video data with YouTube video IDs
   const videos = [
     { 
       id: 1, 
       title: 'Pengantar Kuliah',
-      youtubeId: 'vtPkouMKp2I' // Replace with your actual YouTube video IDs
+      youtubeId: 'vtPkouMKp2I',
     },
     { 
       id: 2, 
@@ -61,7 +60,6 @@ export default function Video() {
     },
   ];
 
-  // Filter videos based on search query
   const filteredVideos = videos.filter(video =>
     video.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -104,7 +102,6 @@ export default function Video() {
 }
 
 const styles = StyleSheet.create({
-  // ... (same styles as before)
   container: {
     flex: 1,
     backgroundColor: '#fff',
