@@ -6,7 +6,7 @@ import { ref, set, get } from 'firebase/database';
 import { useRouter } from 'expo-router';
 
 const questions = [
-  { word: 'Kedaluarsa', isCorrect: false, correctAnswer: 'Kadaluarsa', answerType: 'Tidak Baku' },
+  { word: 'Kedaluarsa', isCorrect: false, correctAnswer: 'Kedaluwarsa', answerType: 'Tidak Baku' },
   { word: 'Junior', isCorrect: true, correctAnswer: 'Junior', answerType: 'Baku' },
   { word: 'Obyek', isCorrect: false, correctAnswer: 'Objek', answerType: 'Tidak Baku' },
   { word: 'Sekedar', isCorrect: false, correctAnswer: 'Sekadar', answerType: 'Tidak Baku' },
@@ -17,14 +17,14 @@ const questions = [
   { word: 'Manajemen', isCorrect: true, correctAnswer: 'Manajemen', answerType: 'Baku' },
   { word: 'Coklat', isCorrect: false, correctAnswer: 'Cokelat', answerType: 'Tidak Baku' },
   { word: 'Apotik', isCorrect: false, correctAnswer: 'Apotek', answerType: 'Tidak Baku' },
-  { word: 'Antre', isCorrect: false, correctAnswer: 'Anter', answerType: 'Tidak Baku' },
+  { word: 'Antri', isCorrect: false, correctAnswer: 'Antre', answerType: 'Tidak Baku' },
   { word: 'Desain', isCorrect: true, correctAnswer: 'Desain', answerType: 'Baku' },
-  { word: 'Lembab', isCorrect: false, correctAnswer: 'Lembab', answerType: 'Tidak Baku' },
+  { word: 'Lembap', isCorrect: false, correctAnswer: 'Lembab', answerType: 'Tidak Baku' },
   { word: 'Respons', isCorrect: true, correctAnswer: 'Respons', answerType: 'Baku' },
   { word: 'Bis', isCorrect: false, correctAnswer: 'Bus', answerType: 'Tidak Baku' },
   { word: 'Teknologi', isCorrect: true, correctAnswer: 'Teknologi', answerType: 'Baku' },
   { word: 'Detil', isCorrect: false, correctAnswer: 'Detail', answerType: 'Tidak Baku' },
-  { word: 'Capek', isCorrect: false, correctAnswer: 'Capek', answerType: 'Tidak Baku' },
+  { word: 'Capek', isCorrect: false, correctAnswer: 'Capai', answerType: 'Tidak Baku' },
   { word: 'Diagnosis', isCorrect: true, correctAnswer: 'Diagnosis', answerType: 'Baku' },
 ];
 
