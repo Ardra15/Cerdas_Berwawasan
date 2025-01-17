@@ -23,4 +23,9 @@ CerdasBerwawasan adalah platform digital berbasis aplikasi mobile yang dapat dia
 ```bash
   npx expo start
 ```
-    
+
+## Tautan Eas Build
+Eas Build
+```bash
+  https://expo.dev/accounts/ardra15/projects/ardra-yusril-app/builds/0392f769-60bc-40a0-997d-fe722bec97c9
+```
