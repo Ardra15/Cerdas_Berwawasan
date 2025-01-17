@@ -19,7 +19,7 @@ const questions = [
   { word: 'Apotik', isCorrect: false, correctAnswer: 'Apotek', answerType: 'Tidak Baku' },
   { word: 'Antri', isCorrect: false, correctAnswer: 'Antre', answerType: 'Tidak Baku' },
   { word: 'Desain', isCorrect: true, correctAnswer: 'Desain', answerType: 'Baku' },
-  { word: 'Lembap', isCorrect: false, correctAnswer: 'Lembab', answerType: 'Tidak Baku' },
+  { word: 'Lembab', isCorrect: false, correctAnswer: 'Lembap', answerType: 'Tidak Baku' },
   { word: 'Respons', isCorrect: true, correctAnswer: 'Respons', answerType: 'Baku' },
   { word: 'Bis', isCorrect: false, correctAnswer: 'Bus', answerType: 'Tidak Baku' },
   { word: 'Teknologi', isCorrect: true, correctAnswer: 'Teknologi', answerType: 'Baku' },
